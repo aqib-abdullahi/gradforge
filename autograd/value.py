@@ -47,6 +47,47 @@ class Value:
         output._backward = _backward
         
         return output
+    
+    def __neg__(self):
+        return self * -1
+    
+    def __sub__(self, other):
+        return self + (-other)
+    
+    def __pow__(self, exponent):
+        assert isinstance(exponent, (int, float)), "Exponent must be a number."
+        new_data = self.data ** exponent
+        output = Value(new_data)
+        
+        output.parents = (self, )
+        output.op = "**"
+        
+        def backward():
+            self.grad += output.grad * (
+                exponent * (self.data ** (exponent - 1))
+            )
+        
+        output._backward = self._backward
+        return output
+    
+    def __truediv__(self, other):
+        if not isinstance(other, Value):
+            other = Value(other)
+        
+        return self * (other ** -1)
+    
+    def relu(self):
+        new_data = self.data if self.data > 0 else 0
+        
+        output = Value(new_data)
+        output.parents = (self,)
+        output.op = "ReLU"
+        
+        def _backward():
+            if self.data > 0:
+                self.grad += output.grad
+        
+        return output
 
     def backward(self):
         
