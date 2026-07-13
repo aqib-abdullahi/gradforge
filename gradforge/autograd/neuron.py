@@ -1,4 +1,4 @@
-from value import Value
+from gradforge.autograd.value import Value
 import random
 
 

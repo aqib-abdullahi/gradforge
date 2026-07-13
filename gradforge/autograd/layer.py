@@ -1,4 +1,4 @@
-from neuron import Neuron
+from gradforge.autograd.neuron import Neuron
 
 class Layer:
     
