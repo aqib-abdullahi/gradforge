@@ -10,7 +10,7 @@ class Value:
         self.op = None
         self._backward = lambda: None
         
-    def _add__(self, other):
+    def __add__(self, other):
         
         if not isinstance(other, Value):
             other = Value(other)
@@ -36,7 +36,7 @@ class Value:
         
         if not isinstance(other, Value):
             other = Value(other)
-        
+            
         new_data = self.data * other.data
         output = Value(new_data)
         
@@ -71,12 +71,12 @@ class Value:
         output.parents = (self, )
         output.op = "**"
         
-        def backward():
+        def _backward():
             self.grad += output.grad * (
                 exponent * (self.data ** (exponent - 1))
             )
         
-        output._backward = self._backward
+        output._backward = _backward
         return output
     
     def __truediv__(self, other):
@@ -99,6 +99,7 @@ class Value:
             if self.data > 0:
                 self.grad += output.grad
         
+        output._backward = _backward
         return output
 
     def backward(self):

@@ -1,11 +1,11 @@
-from gradforge.autograd.neuron import Neuron
+from neuron import Neuron
 
 class Layer:
     
     def __init__(self, nin, nout, nonlin=True):
         
         self.neurons = [
-            Neuron(nin, nout)
+            Neuron(nin, nonlin)
             for _ in range(nout)
         ]
         

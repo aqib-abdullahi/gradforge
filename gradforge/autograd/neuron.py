@@ -1,4 +1,4 @@
-from gradforge.autograd.value import Value
+from value import Value
 import random
 
 
@@ -18,7 +18,7 @@ class Neuron:
             activation = activation + wi * xi
         
         if self.nonlin:
-            activation = activation.relu
+            activation = activation.relu()
         
         return activation
     

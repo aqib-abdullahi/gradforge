@@ -1,6 +1,6 @@
-from gradforge.autograd.layer import Layer
+from layer import Layer
 
-class MPL:
+class MLP:
     
     def __init__(self, nin, nouts):
         sizes = [nin] + nouts
